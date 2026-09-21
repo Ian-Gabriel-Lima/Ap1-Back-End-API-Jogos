@@ -70,5 +70,5 @@ As requisições prontas para testes da API foram criadas no Bruno e estão salv
 
 ----------------------------------------------------------------------------------
 
-## Link do vídeo Demonstração:
-- 
+## Link do vídeo Demonstração no Drive:
+- https://drive.google.com/drive/folders/1Ho_DxzReVzB6QPEeaoGYGNSp1ZhHCLZb?usp=sharing

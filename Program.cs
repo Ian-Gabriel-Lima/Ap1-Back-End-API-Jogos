@@ -27,7 +27,12 @@ app.MapGet("/api/jogos/{id:int}", (int id) =>
 
 app.MapPost("/api/jogos", (JogoEntradaDto dados) =>
 {
-    int proximoId = jogos.Count > 0 ? jogos.Max(jogoEncontrado => jogoEncontrado.Id) + 1 : 1;
+    int proximoId = 1;
+    if (jogos.Count > 0)
+    {
+        proximoId = jogos.Max(jogoEncontrado => jogoEncontrado.Id) + 1;
+    }
+
     var novoJogo = new JogoDto(proximoId, dados.Titulo, dados.Desenvolvedora);
 
     jogos.Add(novoJogo);
