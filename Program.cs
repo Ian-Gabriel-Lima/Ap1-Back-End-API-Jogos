@@ -3,8 +3,8 @@ var app = builder.Build();
 
 var jogos = new List<JogoDto>
 {
-    new JogoDto(1, "God of War 3"),
-    new JogoDto(2, "Red Dead Redemption 2")
+    new JogoDto(1, "God of War 3", "Santa Monica Studio"),
+    new JogoDto(2, "Red Dead Redemption 2", "Rockstar Games")
 };
 
 app.MapGet("/", () => Results.Ok(new { mensagem = "API de Jogos está online! Bem vindo(a)!", status = "OK" }));
@@ -28,7 +28,7 @@ app.MapGet("/api/jogos/{id:int}", (int id) =>
 app.MapPost("/api/jogos", (JogoEntradaDto dados) =>
 {
     int proximoId = jogos.Count > 0 ? jogos.Max(jogoEncontrado => jogoEncontrado.Id) + 1 : 1;
-    var novoJogo = new JogoDto(proximoId, dados.Titulo);
+    var novoJogo = new JogoDto(proximoId, dados.Titulo, dados.Desenvolvedora);
 
     jogos.Add(novoJogo);
 
@@ -43,7 +43,7 @@ app.MapPut("/api/jogos/{id:int}", (int id, JogoEntradaDto dados) =>
         return Results.NotFound();
     }
 
-    var jogoAtualizado = new JogoDto(id, dados.Titulo);
+    var jogoAtualizado = new JogoDto(id, dados.Titulo, dados.Desenvolvedora);
     jogos[indice] = jogoAtualizado;
 
     return Results.Ok(jogoAtualizado);
@@ -61,7 +61,7 @@ app.MapDelete("/api/jogos/{id:int}", (int id) =>
     return Results.NoContent();
 });
 
-app.Run();
+app.Run("http://localhost:5050");
 
-record JogoDto(int Id, string Titulo);
-record JogoEntradaDto(string Titulo);
+record JogoDto(int Id, string Titulo, string Desenvolvedora);
+record JogoEntradaDto(string Titulo, string Desenvolvedora);

@@ -17,7 +17,6 @@ Restauração concluída (0,6s)
 ## 📋 Pré-requisitos
 
 * [.NET 10 SDK](https://dotnet.microsoft.com/download) instalado no seu sistema.
-* dotnet run --urls http://localhost:5050 ------ comando para rodar a aplicação na porta 5050
 
 --------------------------------------------------------------------------------
 
@@ -26,35 +25,37 @@ Restauração concluída (0,6s)
 1. Abra o terminal na raiz do repositório (`AP1-BackEnd`):
    ```bash
    cd AP1-BackEnd
-
+   No terminal do Vscode: (dotnet run --urls http://localhost:5050)  comando para rodar a aplicação na porta 5050.
 --------------------------------------------------------------------------------
 
 ## 📌 Endpoints da API
 
-| Método |     Rota      |     Descrição    |
-| :---   | :---          |  :---            |
-| `GET` | `/api/jogos` | Retorna a lista completa de jogos. |
-| `GET` | `/api/jogos/{id}` | Busca um jogo específico pelo ID. |
-| `POST` | `/api/jogos` | Cadastra um novo jogo. |
-| `PUT` | `/api/jogos/{id}` | Atualiza as informações de um jogo pelo ID. |
-| `DELETE` | `/api/jogos/{id}` | Remove um jogo pelo ID. |
+| Método |     Rota            |     Descrição    |
+|        |                     |                  |
+| 
+| `GET` | `/` | Retorna o estado da API (API no ar). | `200 OK` |
+| `GET` | `/api/jogos` | Retorna a lista completa de jogos. | `200 OK` |
+| `GET` | `/api/jogos/{id}` | Busca um jogo específico pelo ID. | `200 OK` |
+| `POST` | `/api/jogos` | Cadastra um novo jogo. | `201 Created` |
+| `PUT` | `/api/jogos/{id}` | Atualiza as informações de um jogo pelo ID. | `200 OK` |
+| `DELETE` | `/api/jogos/{id}` | Remove um jogo pelo ID. | `204 No Content` |
 
 --------------------------------------------------------------------------------
 
+## 📝 Exemplos de Payload (JSON)
 
-## Exemplos de Payload (JSON):
+No bruno selecione body -> json e rode a requisição
 
-    Criar Jogo (POST /api/jogos):
-
-    {
-  "titulo": "The Last of Us"
+**Criar Jogo (`POST /api/jogos`)**
+```json
+{
+  "titulo": "The Last of Us Part I",
+  "desenvolvedora": "Naughty Dog"
 }
-
-
-    Atualizar Jogo (PUT /api/jogos/{id}):
-
-    {
-  "titulo": "God of War Ragnarok"
+ ** Atualizar jogo (`POST /api/jogos`)**
+ {
+  "titulo": "God of War Ragnarök",
+  "desenvolvedora": "Santa Monica Studio"
 }
 
 ---------------------------------------------------------------------------------
