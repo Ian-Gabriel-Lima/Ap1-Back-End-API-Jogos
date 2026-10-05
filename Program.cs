@@ -1,4 +1,10 @@
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<ApiDbContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 var app = builder.Build();
 
 var jogos = new List<JogoDto>
@@ -70,3 +76,19 @@ app.Run("http://localhost:5050");
 
 record JogoDto(int Id, string Titulo, string Desenvolvedora);
 record JogoEntradaDto(string Titulo, string Desenvolvedora);
+
+class JogoEntity
+{
+    public int Id { get; set; }
+    public string Titulo { get; set; } = string.Empty;
+    public string Desenvolvedora { get; set; } = string.Empty;
+}
+
+class ApiDbContext : DbContext
+{
+    public ApiDbContext(DbContextOptions options) : base(options)
+    {
+    }
+
+    public DbSet<JogoEntity> Jogos => Set<JogoEntity>();
+}
