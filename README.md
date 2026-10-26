@@ -1,10 +1,12 @@
 # API de Gerenciamento de Jogos
 
 API desenvolvida em C# utilizando Minimal APIs no .NET (vers: 10.0.302) para realizar operações fundamentais de CRUD (Create, Read, Update, Delete) em um catálogo de jogos.
-ATUALIZAÇÃO DE AP2:
-  - Conectada a interface aos endpoints comprovados com Antigravity.
-  - CRUD persistente com Entity Framework Core.
 
+
+# ATUALIZAÇÃO DE AP2: 
+- Agora o crud é persistente,com o Entity Framework core que permite manipulação de  bancos de dados relacionais diretamente por meio de objetos em código, eliminando a necessidade de escrever comandos SQL complexos e manuais.
+- Interface aos endpoints  conectados com Antigravity.
+  
 --------------------------------------------------------------------------------
 
 ## Build compila?
@@ -18,7 +20,9 @@ Restauração concluída (0,6s)
 
 ## 📋 Pré-requisitos
 
+* VScode para instalar as ferramentas necessárias!:
 * [.NET 10 SDK](https://dotnet.microsoft.com/download) instalado no seu sistema.
+* SQLite Viewer caso deseje vizualizar a Tabela do banco de dados da aplicação.
 
 --------------------------------------------------------------------------------
 
@@ -27,7 +31,8 @@ Restauração concluída (0,6s)
 1. Abra o terminal na raiz do repositório (`AP1-BackEnd`):
    ```bash
    cd AP1-BackEnd
-   No terminal do Vscode: (dotnet run --urls http://localhost:5050)  comando para rodar a aplicação na porta 5050. Ou se desejar pode ser executado indo pelo index.html criado pelo wwwroot.
+   No terminal do Vscode use o seguinte comando: (dotnet run)  para rodar a aplicação.
+   Abra o navegador e digite: http://localhost:5050
 --------------------------------------------------------------------------------
 
 ## 📌 Endpoints da API
