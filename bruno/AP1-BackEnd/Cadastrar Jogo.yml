@@ -10,8 +10,8 @@ http:
     type: json
     data: |-
       {
-        "Titulo" : "onimusha",
-        "Desenvolvedora" : "Capcom"
+        "Titulo" : "GTA 6",
+        "Desenvolvedora" : "Rockstar Games"
       }
   auth: inherit
 

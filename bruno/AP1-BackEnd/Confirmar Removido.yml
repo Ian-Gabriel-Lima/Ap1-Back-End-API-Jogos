@@ -5,7 +5,7 @@ info:
 
 http:
   method: GET
-  url: "{{baseUrl}}/api/jogos/3"
+  url: "{{baseUrl}}/api/jogos/2"
   body:
     type: json
     data: ""

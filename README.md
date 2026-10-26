@@ -32,22 +32,58 @@ Restauração concluída (0,6s)
    ```bash
    cd AP1-BackEnd
    No terminal do Vscode use o seguinte comando: (dotnet run)  para rodar a aplicação.
-   Abra o navegador e digite: http://localhost:5050
+   Em seguida va até a pasta wwwroot selecione com o botão direito do mouse index.html e clique em (ir ao local do arquivo) de dois cliques no arquivo index.html que a página no navegador deve carregar.
 --------------------------------------------------------------------------------
 
-## 📌 Endpoints da API
+## 🚀 Endpoints da API
 
-| Método |     Rota            |     Descrição    |
-|        |                     |                  |
-| 
-| `GET` | `/` | Retorna o estado da API (API no ar). | `200 OK` |
-| `GET` | `/api/jogos` | Retorna a lista completa de jogos. | `200 OK` |
-| `GET` | `/api/jogos/{id}` | Busca um jogo específico pelo ID. | `200 OK` |
-| `POST` | `/api/jogos` | Cadastra um novo jogo. | `201 Created` |
-| `PUT` | `/api/jogos/{id}` | Atualiza as informações de um jogo pelo ID. | `200 OK` |
-| `DELETE` | `/api/jogos/{id}` | Remove um jogo pelo ID. | `204 No Content` |
+A API está configurada na porta `5050` e disponibiliza as seguintes rotas para gerenciamento dos jogos:
 
---------------------------------------------------------------------------------
+### ℹ️ Status da API
+* **`GET /`**
+  * **Descrição:** Rota raiz para verificar a saúde da aplicação.
+  * **Resposta (200 OK):** Indica que a API está online e operando normalmente.
+
+### 🎮 Gerenciamento de Jogos
+* **`GET /api/jogos`**
+  * **Descrição:** Retorna a listagem completa de todos os jogos cadastrados no banco de dados.
+  * **Resposta (200 OK):** Array contendo os objetos dos jogos.
+
+* **`GET /api/jogos/{id}`**
+  * **Descrição:** Busca os detalhes de um jogo específico através do seu ID numérico.
+  * **Respostas:**
+    * `200 OK`: Retorna os dados do jogo encontrado.
+    * `404 Not Found`: Caso o ID informado não exista.
+
+* **`POST /api/jogos`**
+  * **Descrição:** Cadastra um novo jogo na base de dados.
+  * **Corpo da Requisição (JSON - `JogoEntradaDto`):**
+    ```json
+    {
+      "titulo": "Nome do Jogo",
+      "desenvolvedora": "Nome da Empresa"
+    }
+    ```
+  * **Resposta (201 Created):** Retorna o objeto criado (já preenchido com o ID gerado automaticamente) e o link de localização no cabeçalho.
+
+* **`PUT /api/jogos/{id}`**
+  * **Descrição:** Atualiza as informações de um jogo existente com base no ID enviado.
+  * **Corpo da Requisição (JSON - `JogoEntradaDto`):**
+    ```json
+    {
+      "titulo": "Novo Nome do Jogo",
+      "desenvolvedora": "Nova Empresa"
+    }
+    ```
+  * **Respostas:**
+    * `200 OK`: Retorna o objeto atualizado.
+    * `404 Not Found`: Caso o ID informado não seja encontrado.
+
+* **`DELETE /api/jogos/{id}`**
+  * **Descrição:** Remove permanentemente um jogo do banco de dados pelo seu ID.
+  * **Respostas:**
+    * `204 No Content`: Exclusão realizada com sucesso (sem corpo de resposta).
+    * `404 Not Found`: Caso o ID informado não exista.
 
 ## 📝 Exemplos de Payload (JSON)
 
@@ -64,8 +100,6 @@ No bruno selecione body -> json e rode a requisição
   "titulo": "God of War Ragnarök",
   "desenvolvedora": "Santa Monica Studio"
 }
-
-
 ---------------------------------------------------------------------------------
 
 ## Collection de Testes
@@ -74,5 +108,5 @@ As requisições prontas para testes da API foram criadas no Bruno e estão salv
 
 ----------------------------------------------------------------------------------
 
-## Link do vídeo Demonstração no Drive:
--- 
+## Link do vídeo Demonstração:
+-- https://drive.google.com/file/d/1xcqg3ofD2FKdjEjq2wLNM86s3skxGtPn/view?usp=sharing
