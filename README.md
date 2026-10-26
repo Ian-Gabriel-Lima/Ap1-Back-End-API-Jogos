@@ -1,6 +1,9 @@
 # API de Gerenciamento de Jogos
 
 API desenvolvida em C# utilizando Minimal APIs no .NET (vers: 10.0.302) para realizar operações fundamentais de CRUD (Create, Read, Update, Delete) em um catálogo de jogos.
+ATUALIZAÇÃO DE AP2:
+  - Conectada a interface aos endpoints comprovados com Antigravity.
+  - CRUD persistente com Entity Framework Core.
 
 --------------------------------------------------------------------------------
 
@@ -11,7 +14,6 @@ Restauração concluída (0,6s)
 
  Construir êxito em 2,3s
 --------------------------------------------------------------------------------
-
 
 
 ## 📋 Pré-requisitos
@@ -25,7 +27,7 @@ Restauração concluída (0,6s)
 1. Abra o terminal na raiz do repositório (`AP1-BackEnd`):
    ```bash
    cd AP1-BackEnd
-   No terminal do Vscode: (dotnet run --urls http://localhost:5050)  comando para rodar a aplicação na porta 5050.
+   No terminal do Vscode: (dotnet run --urls http://localhost:5050)  comando para rodar a aplicação na porta 5050. Ou se desejar pode ser executado indo pelo index.html criado pelo wwwroot.
 --------------------------------------------------------------------------------
 
 ## 📌 Endpoints da API
@@ -58,9 +60,6 @@ No bruno selecione body -> json e rode a requisição
   "desenvolvedora": "Santa Monica Studio"
 }
 
----------------------------------------------------------------------------------
-
-## Aviso: Esta API armazena as informações apenas em memória (List<JogoDto>). Qualquer alteração (criação, edição ou remoção) será perdida quando a aplicação for reiniciada.
 
 ---------------------------------------------------------------------------------
 
@@ -71,4 +70,4 @@ As requisições prontas para testes da API foram criadas no Bruno e estão salv
 ----------------------------------------------------------------------------------
 
 ## Link do vídeo Demonstração no Drive:
-- https://drive.google.com/drive/folders/1Ho_DxzReVzB6QPEeaoGYGNSp1ZhHCLZb?usp=sharing
+-- 

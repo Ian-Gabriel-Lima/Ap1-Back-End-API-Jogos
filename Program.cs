@@ -2,79 +2,111 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configuração do SQLite
 builder.Services.AddDbContext<ApiDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection") ?? "Data Source=jogos.db"));
+
+builder.Services.AddCors();
 
 var app = builder.Build();
 
-var jogos = new List<JogoDto>
+app.UseCors(policy => policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
+// Servir frontend a partir de wwwroot na mesma origem da API
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
+// Criação do banco de dados e carga inicial (seed)
+using (var scope = app.Services.CreateScope())
 {
-    new JogoDto(1, "God of War 3", "Santa Monica Studio"),
-    new JogoDto(2, "Red Dead Redemption 2", "Rockstar Games")
-};
+    var db = scope.ServiceProvider.GetRequiredService<ApiDbContext>();
+    db.Database.EnsureCreated();
 
-app.MapGet("/", () => Results.Ok(new { mensagem = "API de Jogos está online! Bem vindo(a)!", status = "OK" }));
+    // Se o banco estiver vazio, insere os 2 jogos pré-definidos da AP1
+    if (!db.Jogos.Any())
+    {
+        db.Jogos.AddRange(
+            new JogoEntity { Titulo = "God of War 3", Desenvolvedora = "Santa Monica Studio" },
+            new JogoEntity { Titulo = "Red Dead Redemption 2", Desenvolvedora = "Rockstar Games" }
+        );
+        db.SaveChanges();
+    }
+}
 
-app.MapGet("/api/jogos", () => Results.Ok(jogos));
-
-app.MapGet("/api/jogos/{id:int}", (int id) =>
+// Rota raiz: se acessada pelo navegador (HTML), redireciona para a interface; se por cliente de API, retorna o JSON
+app.MapGet("/", (HttpContext context) =>
 {
-    var jogo = jogos.Find(jogoEncontrado => jogoEncontrado.Id == id);
+    if (context.Request.Headers.Accept.ToString().Contains("text/html"))
+    {
+        return Results.Redirect("/index.html");
+    }
 
-    if (jogo is null)
-    {
-        return Results.NotFound();
-    }
-    else
-    {
-        return Results.Ok(jogo);
-    }
+    return Results.Ok(new { mensagem = "API de Jogos está online! Bem vindo(a)!", status = "OK" });
 });
 
-app.MapPost("/api/jogos", (JogoEntradaDto dados) =>
+// GET: Listar todos os jogos do banco de dados
+app.MapGet("/api/jogos", async (ApiDbContext db) => 
+    Results.Ok(await db.Jogos.ToListAsync()));
+
+// GET: Buscar jogo por ID
+app.MapGet("/api/jogos/{id:int}", async (int id, ApiDbContext db) =>
 {
-    int proximoId = 1;
-    if (jogos.Count > 0)
+    var jogo = await db.Jogos.FindAsync(id);
+    return jogo is null ? Results.NotFound() : Results.Ok(jogo);
+});
+
+// POST: Cadastrar novo jogo
+app.MapPost("/api/jogos", async (JogoEntradaDto dados, ApiDbContext db) =>
+{
+    var novoJogo = new JogoEntity
     {
-        proximoId = jogos.Max(jogoEncontrado => jogoEncontrado.Id) + 1;
-    }
+        Titulo = dados.Titulo,
+        Desenvolvedora = dados.Desenvolvedora
+    };
 
-    var novoJogo = new JogoDto(proximoId, dados.Titulo, dados.Desenvolvedora);
-
-    jogos.Add(novoJogo);
+    db.Jogos.Add(novoJogo);
+    await db.SaveChangesAsync();
 
     return Results.Created($"/api/jogos/{novoJogo.Id}", novoJogo);
 });
 
-app.MapPut("/api/jogos/{id:int}", (int id, JogoEntradaDto dados) =>
+// PUT: Atualizar jogo existente
+app.MapPut("/api/jogos/{id:int}", async (int id, JogoEntradaDto dados, ApiDbContext db) =>
 {
-    int indice = jogos.FindIndex(jogoEncontrado => jogoEncontrado.Id == id);
-    if (indice == -1)
+    var jogo = await db.Jogos.FindAsync(id);
+    
+    if (jogo is null)
     {
         return Results.NotFound();
     }
 
-    var jogoAtualizado = new JogoDto(id, dados.Titulo, dados.Desenvolvedora);
-    jogos[indice] = jogoAtualizado;
+    jogo.Titulo = dados.Titulo;
+    jogo.Desenvolvedora = dados.Desenvolvedora;
 
-    return Results.Ok(jogoAtualizado);
+    await db.SaveChangesAsync();
+    
+    return Results.Ok(jogo);
 });
 
-app.MapDelete("/api/jogos/{id:int}", (int id) =>
+// DELETE: Remover jogo
+app.MapDelete("/api/jogos/{id:int}", async (int id, ApiDbContext db) =>
 {
-    int indice = jogos.FindIndex(jogoEncontrado => jogoEncontrado.Id == id);
-    if (indice == -1)
+    var jogo = await db.Jogos.FindAsync(id);
+    
+    if (jogo is null) 
     {
         return Results.NotFound();
     }
 
-    jogos.RemoveAt(indice);
+    db.Jogos.Remove(jogo);
+    await db.SaveChangesAsync();
+    
     return Results.NoContent();
 });
 
 app.Run("http://localhost:5050");
 
-record JogoDto(int Id, string Titulo, string Desenvolvedora);
+// Records e Classes
 record JogoEntradaDto(string Titulo, string Desenvolvedora);
 
 class JogoEntity
@@ -86,7 +118,7 @@ class JogoEntity
 
 class ApiDbContext : DbContext
 {
-    public ApiDbContext(DbContextOptions options) : base(options)
+    public ApiDbContext(DbContextOptions<ApiDbContext> options) : base(options)
     {
     }
 
