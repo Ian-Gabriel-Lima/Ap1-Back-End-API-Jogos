@@ -13,16 +13,15 @@ app.UseExceptionHandler(errorApp =>
 {
     errorApp.Run(async context =>
     {
-        context.Response.StatusCode = StatusCodes.status500InternalServerError;
+        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
         context.Response.ContentType = "application/json";
-        await context.Response.WriteAsJsonAsync(new {mensagem = "Ocorreu um erro interno no servidor"});
-    })
-})
-
+        await context.Response.WriteAsJsonAsync(new { mensagem = "Ocorreu um erro interno no servidor" });
+    });
+});
 app.MapGet("/api/teste-erro", () =>
 {
     throw new InvalidOperationException("erro de teste");
-})
+});
 
 
 app.UseCors(policy => policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
