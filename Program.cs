@@ -9,6 +9,22 @@ builder.Services.AddCors();
 
 var app = builder.Build();
 
+app.UseExceptionHandler(errorApp =>
+{
+    errorApp.Run(async context =>
+    {
+        context.Response.StatusCode = StatusCodes.status500InternalServerError;
+        context.Response.ContentType = "application/json";
+        await context.Response.WriteAsJsonAsync(new {mensagem = "Ocorreu um erro interno no servidor"});
+    })
+})
+
+app.MapGet("/api/teste-erro", () =>
+{
+    throw new InvalidOperationException("erro de teste");
+})
+
+
 app.UseCors(policy => policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 app.UseDefaultFiles();
