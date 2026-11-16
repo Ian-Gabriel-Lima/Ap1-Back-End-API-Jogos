@@ -1,3 +1,6 @@
+using ApiJogos.models;
+using ApiJogos.Data;
+using ApiJogos.Dtos;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -110,20 +113,4 @@ app.MapDelete("/api/jogos/{id:int}", async (int id, ApiDbContext db) =>
 app.Run("http://localhost:5050");
 
 
-record JogoEntradaDto(string Titulo, string Desenvolvedora);
 
-class JogoEntity
-{
-    public int Id { get; set; }
-    public string Titulo { get; set; } = string.Empty;
-    public string Desenvolvedora { get; set; } = string.Empty;
-}
-
-class ApiDbContext : DbContext
-{
-    public ApiDbContext(DbContextOptions<ApiDbContext> options) : base(options)
-    {
-    }
-
-    public DbSet<JogoEntity> Jogos => Set<JogoEntity>();
-}

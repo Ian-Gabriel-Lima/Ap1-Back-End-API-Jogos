@@ -2,6 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using ApiJogos.Data;
+using ApiJogos.models;
+using ApiJogos.Dtos;
 
 #nullable disable
 
