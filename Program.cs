@@ -48,9 +48,6 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-app.MapGet("/", () => Results.Ok(new { mensagem = "API de Jogos está online! Bem vindo(a)!", status = "OK" }));
-
-
 app.MapGet("/api/jogos", async (ApiDbContext db) => 
     Results.Ok(await db.Jogos.ToListAsync()));
 
@@ -111,6 +108,3 @@ app.MapDelete("/api/jogos/{id:int}", async (int id, ApiDbContext db) =>
 });
 
 app.Run("http://localhost:5050");
-
-
-
