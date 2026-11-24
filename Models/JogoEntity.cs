@@ -1,4 +1,4 @@
-namespace ApiJogos.models;
+namespace ApiJogos.Models;
 
 public class JogoEntity
 {

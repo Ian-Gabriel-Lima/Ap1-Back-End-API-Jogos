@@ -1,4 +1,4 @@
-using ApiJogos.models;
+using ApiJogos.Models;
 using ApiJogos.Data;
 using ApiJogos.Dtos;
 using Microsoft.EntityFrameworkCore;

@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using ApiJogos.models;
+using ApiJogos.Models;
 
 namespace ApiJogos.Data;
 
