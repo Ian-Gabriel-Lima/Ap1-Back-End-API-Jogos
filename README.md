@@ -39,12 +39,7 @@ Nesta etapa (AS), o projeto foi reestruturado separando as responsabilidades em 
 3. Inicie a aplicação:
    ```bash
    dotnet run
-   ```
-   > **Nota sobre o banco de dados:** A aplicação utiliza SQLite. Na primeira inicialização, o método `EnsureCreated()` cria automaticamente as tabelas e realiza a carga inicial (*seed*) com os 2 jogos pré-definidos (`#1 God of War 3` e `#2 Red Dead Redemption 2`). Também é possível aplicar as migrations diretamente via CLI:
-   > ```bash
-   > dotnet ef database update
-   > ```
-
+   ```  
 4. **Acessando a Interface Gráfica:**
    Com a API rodando, abra o navegador e acesse diretamente:
    👉 **`http://localhost:5050`**
@@ -102,8 +97,5 @@ As requisições prontas e sequenciadas para testes da API estão na pasta [`/br
 8. **`API no ar!`** (`GET /`) ➔ Verifica status da raiz.
 
 ---
-
-## 🎥 Vídeos de Demonstração
-
 ### Vídeo de demonstração — AS
-* 
+* [Link do vídeo](https://drive.google.com/file/d/17N1EobbCoB0mgtHjAG8cGXSvJy2Jbk-o/view?usp=drive_link)
